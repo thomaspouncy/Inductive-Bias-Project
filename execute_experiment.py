@@ -1,3 +1,5 @@
+
+
 # experiment = (training_curriculum, transfer_curriculum)
 # curriculum = ([tasks], num_levels_per_task)
 class ExecuteExperiment(object):
@@ -14,8 +16,8 @@ class ExecuteExperiment(object):
 
         # training and transfer curriculum
         self.results = {'training': {}, 'transfer': {}}
-        self.execute_training()
-        self.execute_transfer()
+        self.execute_training_curriculum()
+        self.execute_transfer_curriculum()
 
     def pre_train(self, num_pre_train_tasks, num_levels_per_task):
         for _ in range(num_pre_train_tasks):
@@ -23,7 +25,7 @@ class ExecuteExperiment(object):
             for _ in range(num_levels_per_task):
                 self.agent.attempt_task_level(task, task.generate_level(), training=True)
 
-    def execute_training(self):
+    def execute_training_curriculum(self):
         tasks, num_levels = self.training_curriculum
         for task in tasks:
             for _ in range(num_levels):
@@ -33,7 +35,7 @@ class ExecuteExperiment(object):
                 else:
                     self.results['training'][task.get_task()['task_id']] = [result]
 
-    def execute_transfer(self):
+    def execute_transfer_curriculum(self):
         tasks, num_levels = self.transfer_curriculum
         for task in tasks:
             for _ in range(num_levels):

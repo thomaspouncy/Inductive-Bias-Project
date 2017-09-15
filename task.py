@@ -1,5 +1,6 @@
 from itertools import product
 from copy import deepcopy
+import numpy as np
 
 
 object_primitives = \
@@ -35,7 +36,8 @@ class State(object):
         return self.objects
 
     def get_consequent_state(self, action):
-        return self
+        if action:
+            return self
 
 
 class Task(object):
