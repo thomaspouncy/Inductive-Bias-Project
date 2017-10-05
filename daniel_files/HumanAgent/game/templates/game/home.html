@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title> Home </title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'game/css/home.css' %}" type="text/css">
+    </head>
+
+    <body>
+        <div class="games">
+            <h3 id="p1"> Games </h3>
+            <ul id="game_list"> </ul>
+        </div>
+
+        <script type="text/javascript">
+            var requested = {% autoescape off %}{{ requested }}{% endautoescape %};
+            Object.keys(requested).forEach(function(key) {
+                var game_id = requested[key].fields.game_id;
+                var link = document.createElement("li");
+                document.getElementById("game_list").appendChild(link);
+                link.id = game_id;
+                document.getElementById(game_id).innerHTML = '<a href="' + game_id + "/game" + '">' + game_id + '</a>';
+            });
+        </script>
+    </body>
+</html>

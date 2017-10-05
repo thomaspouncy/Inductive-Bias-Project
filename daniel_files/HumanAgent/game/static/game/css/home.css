@@ -1,0 +1,21 @@
+/* CSSTerm.com Simple CSS menu */
+
+.games ul {
+    margin: 0; 
+    padding: 0;
+    width:185px;
+    list-style-type: none;
+}
+
+.games ul li a {
+    text-decoration: none;
+    padding: 10.5px 11px;
+    display:block;
+}
+ 
+ 
+.games ul li a:hover, .games ul li .current {
+    background-color: whitesmoke;
+}
+
+

@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game</title>
+      {% load staticfiles %}
+      <link rel="stylesheet" href="{% static 'game/css/game.css' %}" type="text/css">
+  </head>
+  <body onload="startGame()">
+
+      <!--  Modal -->
+      <div id="myModal" class="modal">
+        <div class="head">
+          <a class="btn-close trigger" href="#">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="modal-body">
+            <h1 id="status">WIN</h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Script Vars and Scripts -->
+      <script>
+          var level_objects = {% autoescape off %}{{ objects }}{% endautoescape %};
+          var task_interactions = {% autoescape off %}{{ interactions }}{% endautoescape %};
+          var task_propositions = {% autoescape off %}{{ propositions }}{% endautoescape %};
+          var grid = {% autoescape off %}{{ grid_size }}{% endautoescape %};
+      </script>
+
+      <script type="text/javascript"  src="{% static 'game/js/main.js' %}"></script>
+      <script type="text/javascript"  src="{% static 'game/js/gameParams.js' %}"></script>
+      <script type="text/javascript"  src="{% static 'game/js/gameState.js' %}"></script>
+      <script type="text/javascript"  src="{% static 'game/js/gameArea.js' %}"></script>
+      <script type="text/javascript"  src="{% static 'game/js/gameAvatar.js' %}"></script>
+      <script type="text/javascript"  src="{% static 'game/js/actions.js' %}"></script>
+      <script type="text/javascript"  src="{% static 'game/js/objects.js' %}"></script>
+      <script type="text/javascript"  src="{% static 'game/js/shapes.js' %}"></script>
+  </body>
+</html>
