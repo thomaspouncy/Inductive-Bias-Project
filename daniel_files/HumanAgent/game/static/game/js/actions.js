@@ -81,7 +81,6 @@ function push(actor_id, obj_id) {
             actor.speedY = speedY;
             actor.newPos();
         }
-
         gameArea.redraw();
     }
 }

@@ -5,12 +5,16 @@ var gameParams = {
     propositions : new Array(),
 
     init : function() {
+        // level_objects, task_interactions and task_propositions loaded from database
         for (i = 0; i < level_objects.length; i++) {
             var obj_i = level_objects[i].fields.obj_id;
             gameParams.interactions[obj_i] = new Array();
             for (j = 0; j < level_objects.length; j++) {
-                 var obj_j = level_objects[j].fields.obj_id;
-                gameParams.interactions[obj_i][obj_j] = 0;
+                var obj_j = level_objects[j].fields.obj_id;
+                if (obj_i != 'Avatar' && obj_j != 'Avatar') {
+                    var fields = { actor_id: obj_i, obj_id: obj_j};
+                    gameParams.interactions[obj_i][obj_j] = Actions['push'](fields);
+                } else { gameParams.interactions[obj_i][obj_j] = 0; }
             }
         }
         gameParams.load_objects();
