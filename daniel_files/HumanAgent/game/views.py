@@ -9,9 +9,11 @@ from django.core.serializers import serialize
 
 # Create your views here.
 
+
 def HomePage(request):
     context = {'requested': serialize('json', GameRequest.objects.all())}
     return render(request, 'game/home.html', context)
+
 
 def GamePage(request, game_id):
     game = get_object_or_404(GameRequest, game_id=game_id)

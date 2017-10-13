@@ -1,14 +1,14 @@
 
 var gameArea = {
     canvas : document.createElement("canvas"),
-    X_grid : grid,
-    Y_grid : 2 * grid,
+    X_grid : 2 * grid,
+    Y_grid : grid,
     padding : 50 / grid,
     stepSize : 600 / grid,
 
     init : function() {
         // Canvas
-        this.canvas.width = 1200 + 2*this.padding, this.canvas.height = 600 + 2*this.padding;
+        this.canvas.width = 1200 + 2 * this.padding, this.canvas.height = 600 + 2 * this.padding;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[-1]);
         gameArea.draw();
@@ -26,11 +26,11 @@ var gameArea = {
     drawGrid: function (ctx, rows, cols, padding) {
         var bw = this.canvas.width - 2*this.padding;
         var bh = this.canvas.height - 2*this.padding;
-        for (var x = 0.0; x <= bw; x += bw/cols) {
+        for (var x = 0.0; x <= bw; x += bw / cols) {
             ctx.moveTo(0.5 + x + padding, padding);
             ctx.lineTo(0.5 + x + padding, bh + padding);
         }
-        for (var x = 0.0; x <= bh; x += bh/rows) {
+        for (var x = 0.0; x <= bh; x += bh / rows) {
             ctx.moveTo(padding, 0.5 + x + padding);
             ctx.lineTo(bw + padding, 0.5 + x + padding);
         }
@@ -38,7 +38,7 @@ var gameArea = {
         ctx.stroke();
     },
     draw : function() {
-        this.drawGrid(this.context, this.X_grid, this.Y_grid, this.padding);
+        this.drawGrid(this.context, this.Y_grid, this.X_grid, this.padding);
 
         Object.keys(gameParams.objects).forEach(function(key) {
             if (gameParams.objects[key].exists) {

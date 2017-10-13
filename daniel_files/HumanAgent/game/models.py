@@ -12,6 +12,7 @@ class Level(models.Model):
     def __str__(self): 
         return self.level_id
 
+
 class Object(models.Model):
     level = models.ForeignKey(Level, on_delete=models.CASCADE, null=True)
     obj_id = models.CharField(max_length=200)
@@ -26,8 +27,10 @@ class Object(models.Model):
 #  Task
 class Task(models.Model):
     task_id = models.CharField(max_length=200)
+
     def __str__(self): 
         return self.task_id
+
 
 class Interactions(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
@@ -48,8 +51,10 @@ class GameRequest(models.Model):
     game_id = models.CharField(max_length=200)
     level = models.ForeignKey(Level, on_delete=models.CASCADE, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
+
     def __str__(self): 
         return self.game_id
+
 
 class GameResult(models.Model):
     game = models.ForeignKey(GameRequest, on_delete=models.CASCADE, null=True)

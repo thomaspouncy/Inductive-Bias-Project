@@ -1,22 +1,29 @@
-
+var allShadowColor =  "rgba( 4, 4, 4, 0.3 )";
 
 function sketch_rect(ctx, x, y, length, width, color) {
     ctx.fillStyle = color;
+    ctx.shadowColor = allShadowColor;
+    ctx.shadowBlur = 10;
     ctx.fillRect(x, y, length, width);
+    ctx.shadowColor = 'transparent';
+
 }
 
 function sketch_circle(ctx, x, y, radius, color) {
     ctx.beginPath();
     ctx.strokeStyle = ctx.fillStyle = color;
     ctx.arc(x, y, radius, 0, 2*Math.PI);
+    ctx.shadowColor = allShadowColor;
+    ctx.shadowBlur = 10;
     ctx.fill();
     ctx.stroke();
-    ctx.beginPath();
+    ctx.shadowColor = 'transparent';
 }
 
 function sketch_diamond(ctx, x, y, w, h, color) {
     x = x + (gameArea.stepSize - w)/2;
     y = y + (gameArea.stepSize)/2 - 2*gameArea.padding;
+
     var color_map = {};
     color_map['black'] = ['#484848','#303030','#686868'];
     color_map['green'] = ['#4BB74C','#517B58','#5B9C64'];
@@ -24,6 +31,8 @@ function sketch_diamond(ctx, x, y, w, h, color) {
     color_map['blue'] = ['#3366CC','#003399','#333399'];
     colors = color_map[color];
 
+    ctx.shadowColor = allShadowColor;
+    ctx.shadowBlur = 10;
     ctx.fillStyle=colors[0];
     ctx.beginPath();
     ctx.moveTo(x,y);
@@ -60,16 +69,17 @@ function sketch_diamond(ctx, x, y, w, h, color) {
     ctx.lineTo(x+w/2,y);
     ctx.lineTo(x+w,y);
     ctx.fill();
-    ctx.beginPath();
+    ctx.shadowColor = 'transparent';
 
  }
 
 function sketch_star(ctx, x, y, radius, color, p=5, m=0.5)
 {
     ctx.save();
+    ctx.moveTo(0,0-radius);
     ctx.beginPath();
     ctx.translate(x, y);
-    ctx.moveTo(0,0-radius);
+
     for (var i = 0; i < p; i++)
     {
         ctx.rotate(Math.PI / p);
@@ -78,7 +88,10 @@ function sketch_star(ctx, x, y, radius, color, p=5, m=0.5)
         ctx.lineTo(0, 0 - radius);
     }
     ctx.fillStyle = color;
+    ctx.shadowColor = allShadowColor;
+    ctx.shadowBlur = 10;
     ctx.fill();
     ctx.restore();
+    ctx.shadowColor = 'transparent';
     ctx.beginPath();
 }

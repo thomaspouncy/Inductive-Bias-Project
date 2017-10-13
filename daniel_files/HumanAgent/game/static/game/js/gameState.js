@@ -6,9 +6,9 @@ var gameState = {
     actions_left : 100,
 
     init : function() {
-        for (i = 0; i < gameArea.Y_grid; i++) {
+        for (i = 0; i < gameArea.X_grid; i++) {
             gameState.board[i] = new Array();
-            for (j = 0; j < gameArea.X_grid; j++) {
+            for (j = 0; j < gameArea.Y_grid; j++) {
                 gameState.board[i][j] = 0;
             }
         }

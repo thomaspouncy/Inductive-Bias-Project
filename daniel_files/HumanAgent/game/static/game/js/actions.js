@@ -1,23 +1,25 @@
 
 var Actions = {
-    to_dead: function(specs) {
-        return new remove(specs.actor_id, specs.obj_id);
+    to_dead: function(params) {
+        return new remove(params.actor_id, params.obj_id);
     },
-    toggle_color: function(specs) {
-        console.log(gameParams.objects);
-        return new cycle_state(specs.actor_id, specs.obj_id, 'color');
+    cycle_color: function(params) {
+        return new cycle_state(params.actor_id, params.obj_id, 'color');
     },
-    toggle_shape: function(specs) {
-        return new cycle_state(specs.actor_id, specs.obj_id, 'shape');
+    cycle_shape: function(params) {
+        return new cycle_state(params.actor_id, params.obj_id, 'shape');
     },
-    toggle_size: function(specs) {
-        return new cycle_state(specs.actor_id, specs.obj_id, 'size');
+    cycle_size: function(params) {
+        return new cycle_state(params.actor_id, params.obj_id, 'size');
     },
-    to_red: function(specs) {
-        return new change_state(specs.actor_id, specs.obj_id, 'color', 'red');
+    to_red: function(params) {
+        return new change_state(params.actor_id, params.obj_id, 'color', 'red');
     },
-    to_circle: function(specs) {
-        return new change_state(specs.actor_id, specs.obj_id, 'shape', 'circle');
+    to_circle: function(params) {
+        return new change_state(params.actor_id, params.obj_id, 'shape', 'circle');
+    },
+    push: function(params) {
+        return new push(params.actor_id, params.obj_id);
     },
 };
 
@@ -41,16 +43,45 @@ function cycle_state(actor_id, obj_id, feature) {
         var options = this.features[feature];
         var end_state_id = (options.indexOf(gameParams.objects[obj_id][feature]) + 1) % options.length;
         var end_state = options[end_state_id];
-        if (feature == 'shape') {gameParams.objects[obj_id] = Shapes[end_state](gameParams.objects[obj_id]);}
-        else {gameParams.objects[obj_id][feature] = end_state;}
+        if (feature == 'shape') {
+            gameParams.objects[obj_id] = Shapes[end_state](gameParams.objects[obj_id]);
+        } else {
+            gameParams.objects[obj_id][feature] = end_state;
+        }
         gameArea.redraw();
     }
 }
 
 function change_state(actor_id, obj_id, feature, end_state) {
     this.invoke = function() {
-        if (feature == 'shape') {gameParams.objects[obj_id] = Shapes[end_state](gameParams.objects[obj_id]);}
-        else {gameParams.objects[obj_id][feature] = end_state;}
+        if (feature == 'shape') {
+            gameParams.objects[obj_id] = Shapes[end_state](gameParams.objects[obj_id]);
+        } else {
+            gameParams.objects[obj_id][feature] = end_state;
+        }
+        gameArea.redraw();
+    }
+}
+
+function push(actor_id, obj_id) {
+    this.invoke = function() {
+        var actor = gameParams.objects[actor_id];
+        var obj = gameParams.objects[obj_id];
+        var x = obj.X;
+        var y = obj.Y;
+        var speedX = obj.X - actor.X;
+        var speedY = obj.Y - actor.Y;
+
+        obj.speedX = speedX;
+        obj.speedY = speedY;
+        obj.newPos();
+
+        if (gameState.board[x][y] == 0) {
+            actor.speedX = speedX;
+            actor.speedY = speedY;
+            actor.newPos();
+        }
+
         gameArea.redraw();
     }
 }

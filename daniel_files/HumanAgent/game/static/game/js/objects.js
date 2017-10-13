@@ -12,9 +12,9 @@ function Objects(params) {
     this.speedY = 0;
     this.newPos = function() {
         gameState.board[this.X][this.Y] = 0
-        var new_x = Math.min(Math.max(this.X + this.speedX, 0), gameArea.Y_grid - 1);
-        var new_y = Math.min(Math.max(this.Y + this.speedY, 0), gameArea.X_grid - 1);
-        if (gameState.board[new_x][new_y]==0) {this.X = new_x; this.Y = new_y; }
+        var new_x = Math.min(Math.max(this.X + this.speedX, 0), gameArea.X_grid - 1);
+        var new_y = Math.min(Math.max(this.Y + this.speedY, 0), gameArea.Y_grid - 1);
+        if (gameState.board[new_x][new_y] == 0) this.X = new_x; this.Y = new_y;
         else {
             var action = gameParams.interactions[this.obj_id][gameState.board[new_x][new_y]];
             if (action) { 
@@ -22,6 +22,8 @@ function Objects(params) {
                 gameState.goal_check();
             }
         }
+        this.speedX = 0;
+        this.speedY = 0;
         gameState.board[this.X][this.Y] = this.obj_id;
     }
 }
@@ -42,6 +44,7 @@ var color_map = {};
     color_map['green'] = '#259b24';
     color_map['red'] = '#ff5177';
     color_map['blue'] = '#3366CC';
+
 
 function rect(params) {
     Objects.call(this, params);
