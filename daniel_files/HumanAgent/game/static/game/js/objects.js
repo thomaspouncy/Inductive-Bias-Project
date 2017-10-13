@@ -14,8 +14,10 @@ function Objects(params) {
         gameState.board[this.X][this.Y] = 0
         var new_x = Math.min(Math.max(this.X + this.speedX, 0), gameArea.X_grid - 1);
         var new_y = Math.min(Math.max(this.Y + this.speedY, 0), gameArea.Y_grid - 1);
-        if (gameState.board[new_x][new_y] == 0) this.X = new_x; this.Y = new_y;
-        else {
+        if (gameState.board[new_x][new_y] == 0) {
+            this.X = new_x;
+            this.Y = new_y;
+        } else {
             var action = gameParams.interactions[this.obj_id][gameState.board[new_x][new_y]];
             if (action) { 
                 action.invoke();

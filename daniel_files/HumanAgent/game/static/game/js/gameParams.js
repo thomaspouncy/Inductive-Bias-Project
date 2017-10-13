@@ -26,7 +26,6 @@ var gameParams = {
     load_interactions : function() {
         Object.keys(task_interactions).forEach(function(key) {
             var fields = task_interactions[key].fields;
-            console.log(fields.action);
             gameParams.interactions[fields.actor_id][fields.obj_id] = Actions[fields.action](fields);
         });
     },
