@@ -4,6 +4,7 @@ var gameState = {
     actions : new Array(),
     board : new Array(),
     actions_left : 100,
+    pickedUp : new Array(),
 
     init : function() {
         for (i = 0; i < gameArea.X_grid; i++) {

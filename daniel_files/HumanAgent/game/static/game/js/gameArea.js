@@ -1,16 +1,21 @@
 
 var gameArea = {
-    canvas : document.createElement("canvas"),
+    canvas : document.getElementById("main"),
+    stock : document.getElementById("stock"),
     X_grid : 2 * grid,
     Y_grid : grid,
     padding : 50 / grid,
-    stepSize : 600 / grid,
+    stepSize : 500 / grid,
+    stockSize : stock,
 
     init : function() {
         // Canvas
-        this.canvas.width = 1200 + 2 * this.padding, this.canvas.height = 600 + 2 * this.padding;
+        this.canvas.width = 1000 + 2 * this.padding;
+        this.canvas.height = 500 + 2 * this.padding;
+        this.stock.width = this.stockSize * this.stepSize + 2 * this.padding;
+        this.stock.height = this.stepSize + 2 * this.padding;
         this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[-1]);
+        this.stock_context = this.stock.getContext("2d");
         gameArea.draw();
         // State alert modal
         this.modal = document.getElementById('myModal');
@@ -23,9 +28,7 @@ var gameArea = {
             }
         };
     },
-    drawGrid: function (ctx, rows, cols, padding) {
-        var bw = this.canvas.width - 2*this.padding;
-        var bh = this.canvas.height - 2*this.padding;
+    drawGrid: function (ctx, bw, bh, rows, cols, padding) {
         for (var x = 0.0; x <= bw; x += bw / cols) {
             ctx.moveTo(0.5 + x + padding, padding);
             ctx.lineTo(0.5 + x + padding, bh + padding);
@@ -38,16 +41,40 @@ var gameArea = {
         ctx.stroke();
     },
     draw : function() {
-        this.drawGrid(this.context, this.Y_grid, this.X_grid, this.padding);
+        this.drawGrid(
+            this.context,
+            this.canvas.width - 2*this.padding,
+            this.canvas.height - 2*this.padding,
+            this.Y_grid,
+            this.X_grid,
+            this.padding);
+        this.drawGrid(
+            this.stock_context,
+            this.stock.width - 2*this.padding,
+            this.stock.height - 2*this.padding,
+            1, this.stockSize,
+            this.padding);
 
         Object.keys(gameParams.objects).forEach(function(key) {
             if (gameParams.objects[key].exists) {
                 gameParams.objects[key].update();
             }
         });
+        this.picked_up();
+    },
+    picked_up : function() {
+        var y = 0;
+        Object.keys(gameState.pickedUp).forEach(function(key) {
+            var obj = gameParams.objects[gameState.pickedUp[key]];
+            obj.X = y;
+            obj.Y = 0;
+            obj.update(gameArea.stock_context);
+            y += 1;
+        });
     },
     redraw : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.stock_context.clearRect(0, 0, this.stock.width, this.stock.height);
         this.draw();
     },
     win_alert : function() {

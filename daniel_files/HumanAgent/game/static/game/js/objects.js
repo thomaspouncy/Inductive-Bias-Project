@@ -7,6 +7,7 @@ function Objects(params) {
     this.color = params.color;
     this.size = params.size;
     this.shape = '';
+    this.pickedUp = false;
 
     this.speedX = 0;
     this.speedY = 0;
@@ -14,12 +15,13 @@ function Objects(params) {
         gameState.board[this.X][this.Y] = 0
         var new_x = Math.min(Math.max(this.X + this.speedX, 0), gameArea.X_grid - 1);
         var new_y = Math.min(Math.max(this.Y + this.speedY, 0), gameArea.Y_grid - 1);
-        if (gameState.board[new_x][new_y] == 0) {
+        var obj_id = gameState.board[new_x][new_y];
+        if (obj_id == 0 || !gameParams.objects[obj_id].exists) {
             this.X = new_x;
             this.Y = new_y;
         } else {
             var action = gameParams.interactions[this.obj_id][gameState.board[new_x][new_y]];
-            if (action) { 
+            if (action) {
                 action.invoke();
                 gameState.goal_check();
             }
@@ -52,10 +54,10 @@ function rect(params) {
     Objects.call(this, params);
     this.shape = 'rect';
     this.side = gameArea.stepSize - 2*gameArea.padding;
-    this.update = function() {
+    this.update = function(context = gameArea.context) {
         var geo_x = scale(this.X) + gameArea.padding;
         var geo_y = scale(this.Y) + gameArea.padding;
-        sketch_rect(gameArea.context, geo_x, geo_y, this.side, this.side, color_map[this.color]); 
+        sketch_rect(context, geo_x, geo_y, this.side, this.side, color_map[this.color]);
     }
 }
 
@@ -63,8 +65,8 @@ function circle(params) {
     Objects.call(this, params);
     this.shape = 'circle';
     this.radius = gameArea.stepSize/2 - gameArea.padding;
-    this.update = function() {
-       sketch_circle(gameArea.context, scale(this.X+0.5), scale(this.Y+0.5), this.radius, color_map[this.color]);
+    this.update = function(context = gameArea.context) {
+       sketch_circle(context, scale(this.X+0.5), scale(this.Y+0.5), this.radius, color_map[this.color]);
     }
 }
 
@@ -72,8 +74,8 @@ function diamond(params) {
     Objects.call(this, params);
     this.shape = 'diamond';
     this.squareLength = gameArea.stepSize - 2*gameArea.padding;
-    this.update = function() {
-        sketch_diamond(gameArea.context, scale(this.X), scale(this.Y), this.squareLength, this.squareLength, this.color);
+    this.update = function(context = gameArea.context) {
+        sketch_diamond(context, scale(this.X), scale(this.Y), this.squareLength, this.squareLength, this.color);
     }
 }
 
@@ -81,7 +83,7 @@ function star(params) {
     Objects.call(this, params);
     this.shape = 'star';
     this.radius = (gameArea.stepSize - gameArea.padding)/2;
-    this.update = function() {
-        sketch_star(gameArea.context, scale(this.X+0.5), scale(this.Y+0.5), this.radius, color_map[this.color]);
+    this.update = function(context = gameArea.context) {
+        sketch_star(context, scale(this.X+0.5), scale(this.Y+0.5), this.radius, color_map[this.color]);
     }
 }

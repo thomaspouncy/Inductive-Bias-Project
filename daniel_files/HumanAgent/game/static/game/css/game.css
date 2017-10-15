@@ -34,8 +34,9 @@ canvas {
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 50px; 
+    margin-top: 50px;
     display: block;
+    /*float: left;*/
     box-shadow: 10px 10px 10px #999;
     border: 5px solid #856046 ; 
     background-color: #c7a693 ; 

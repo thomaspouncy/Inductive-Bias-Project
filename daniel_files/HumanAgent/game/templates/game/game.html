@@ -22,13 +22,15 @@
           </div>
         </div>
       </div>
-
+      <canvas id="main"></canvas>
+      <canvas id="stock"></canvas>
       <!-- Script Vars and Scripts -->
       <script>
           var level_objects = {% autoescape off %}{{ objects }}{% endautoescape %};
           var task_interactions = {% autoescape off %}{{ interactions }}{% endautoescape %};
           var task_propositions = {% autoescape off %}{{ propositions }}{% endautoescape %};
           var grid = {% autoescape off %}{{ grid_size }}{% endautoescape %};
+          var stock = {% autoescape off %}{{ stock }}{% endautoescape %};
       </script>
 
       <script type="text/javascript"  src="{% static 'game/js/main.js' %}"></script>

@@ -8,6 +8,7 @@ from django.db import models
 class Level(models.Model):
     level_id = models.CharField(max_length=200)
     grid_size = models.IntegerField(default=0)
+    stock_size = models.IntegerField(default=0)
 
     def __str__(self): 
         return self.level_id

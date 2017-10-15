@@ -21,6 +21,9 @@ var Actions = {
     push: function(params) {
         return new push(params.actor_id, params.obj_id);
     },
+    pick_up: function(params) {
+        return new pick_up(params.actor_id, params.obj_id);
+    },
 };
 
 function remove(actor_id, obj_id) {
@@ -82,5 +85,17 @@ function push(actor_id, obj_id) {
             actor.newPos();
         }
         gameArea.redraw();
+    }
+}
+
+function pick_up(actor_id, obj_id) {
+    this.invoke = function() {
+        if (gameState.pickedUp.length < gameArea.stockSize) {
+            gameParams.objects[obj_id].exists = false;
+            gameParams.objects[actor_id].X = gameParams.objects[obj_id].X;
+            gameParams.objects[actor_id].Y = gameParams.objects[obj_id].Y;
+            gameState.pickedUp.push(obj_id);
+            gameArea.redraw();
+        }
     }
 }

@@ -25,7 +25,8 @@ def GamePage(request, game_id):
     serialized_propositions = serialize('json', task.proposition_set.all())
 
     context = {
-        'grid_size': level.grid_size, 
+        'grid_size': level.grid_size,
+        'stock': level.stock_size,
         'objects': serialized_objs, 
         'interactions': serialized_interactions,
         'propositions': serialized_propositions,
